@@ -3,10 +3,7 @@
  */
 export const TOKENS = {
   FLOW: '0x1654653399040a61',
-  FUSD: '0x3c5959b568896393',
   USDC: '0xb19436aae4d94622',
-  tUSDT: '0x95e019a17d0e23d7',
-  BLT: '0x0f9df91c9121c460',
 } as const;
 
 /**

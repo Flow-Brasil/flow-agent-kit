@@ -18,13 +18,13 @@ e este projeto adere ao [Versionamento Semântico](https://semver.org/lang/pt-BR
 
 ### Removido
 
-- Código específico da Solana
-- Ferramentas relacionadas à Solana
-- Dependências não utilizadas
+- Código legado não utilizado
+- Dependências obsoletas
+- Configurações redundantes
 
 ### Alterado
 
-- Migração completa de Solana para Flow blockchain
+- Implementação da estrutura base do Flow blockchain
 - Atualização do sistema de tipos
 - Refatoração da estrutura do projeto
 - Atualização da documentação
