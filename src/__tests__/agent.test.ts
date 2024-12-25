@@ -1,5 +1,24 @@
 import { FlowAgentKit } from '../agent/index.js';
 
+jest.mock('@onflow/fcl', () => ({
+  config: jest.fn(),
+  query: jest.fn().mockResolvedValue('0.0'),
+}));
+
+jest.mock('@google/generative-ai', () => {
+  return {
+    GoogleGenerativeAI: jest.fn().mockImplementation(() => ({
+      getGenerativeModel: jest.fn().mockReturnValue({
+        generateContent: jest.fn().mockResolvedValue({
+          response: {
+            text: jest.fn().mockResolvedValue('Resposta mockada do Gemini'),
+          },
+        }),
+      }),
+    })),
+  };
+});
+
 describe('FlowAgentKit', () => {
   let agent: FlowAgentKit;
 
@@ -15,11 +34,12 @@ describe('FlowAgentKit', () => {
     const prompt = 'O que é Flow blockchain?';
     const response = await agent.generateContent(prompt);
     expect(typeof response).toBe('string');
-    expect(response.length).toBeGreaterThan(0);
+    expect(response).toBe('Resposta mockada do Gemini');
   });
 
   it('should get balance', async () => {
     const balance = await agent.getBalance('0x1234');
     expect(typeof balance).toBe('number');
+    expect(balance).toBe(0);
   });
 }); 
