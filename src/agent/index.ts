@@ -2,6 +2,10 @@ import * as fcl from '@onflow/fcl';
 import * as types from '@onflow/types';
 import { FlowNetwork } from '../types';
 import { GoogleGenerativeAI } from '@google/generative-ai';
+import dotenv from 'dotenv';
+
+// Carregar variáveis de ambiente
+dotenv.config();
 
 /**
  * Main class for interacting with Flow blockchain
@@ -20,28 +24,26 @@ export class FlowAgentKit {
    */
   constructor(private_key: string, network: FlowNetwork = 'mainnet', gemini_api_key: string) {
     // Configure FCL
-    if (network === 'testnet') {
-      fcl.config({
-        'flow.network': 'testnet',
-        'app.detail.title': 'Flow Agent Kit',
-        'accessNode.api': 'https://rest-testnet.onflow.org',
-        'discovery.wallet': 'https://fcl-discovery.onflow.org/testnet/authn',
-      } as any);
-    } else if (network === 'mainnet') {
-      fcl.config({
-        'flow.network': 'mainnet',
-        'app.detail.title': 'Flow Agent Kit',
-        'accessNode.api': 'https://rest-mainnet.onflow.org',
-        'discovery.wallet': 'https://fcl-discovery.onflow.org/authn',
-      } as any);
-    } else {
-      fcl.config({
-        'flow.network': 'emulator',
-        'app.detail.title': 'Flow Agent Kit',
-        'accessNode.api': 'http://localhost:8888',
-        'discovery.wallet': 'http://localhost:8701/fcl/authn',
-      } as any);
-    }
+    const accessNode = process.env.FLOW_ACCESS_NODE || (
+      network === 'testnet'
+        ? 'https://rest-testnet.onflow.org'
+        : network === 'mainnet'
+          ? 'https://rest-mainnet.onflow.org'
+          : 'http://localhost:8888'
+    );
+
+    const walletDiscovery = network === 'mainnet'
+      ? 'https://fcl-discovery.onflow.org/authn'
+      : network === 'testnet'
+        ? 'https://fcl-discovery.onflow.org/testnet/authn'
+        : 'http://localhost:8701/fcl/authn';
+
+    fcl.config({
+      'flow.network': network,
+      'app.detail.title': 'Flow Agent Kit',
+      'accessNode.api': accessNode,
+      'discovery.wallet': walletDiscovery,
+    } as any);
 
     // Initialize account
     this.address = private_key;
