@@ -1,12 +1,13 @@
 # How to Test It Out
 
-Testing the **Solana Agent Kit** ensures that all functionalities are working as expected. You can run automated tests or interact with the agent in different modes to verify its operations.
+Testing the **Flow Agent Kit** ensures that all functionalities are working as expected. You can run automated tests or interact with the agent in different modes to verify its operations.
 
 ## Running Automated Tests
 
 The project includes a test script located at `test/index.ts`. To execute the tests:
 
 1. **Ensure Dependencies are Installed**
+
    - If you haven't installed the dependencies yet, refer to the [Setup Locally](./setup_locally.md) guide.
 
 2. **Run the Test Script**
@@ -18,7 +19,9 @@ The project includes a test script located at `test/index.ts`. To execute the te
 ## Interactive Modes
 
 ### Available Modes
+
 1. **Chat Mode**
+
    - Allows you to interact with the agent in a conversational manner.
 
 2. **Autonomous Mode**
@@ -27,6 +30,7 @@ The project includes a test script located at `test/index.ts`. To execute the te
 ### Starting the Agent
 
 1. **Launch the Agent**
+
    ```bash
    pnpm start
    ```
@@ -38,36 +42,40 @@ The project includes a test script located at `test/index.ts`. To execute the te
 ### Using Each Mode
 
 #### Chat Mode
+
 - Start chatting by entering prompts after the `Prompt:` indicator
 - Type `exit` to end the chat session
 
 #### Autonomous Mode
+
 - The agent executes predefined actions every 10 seconds
 - Actions and outputs are displayed in the console
 
 ## Code Examples
 
 ### Token Deployment
+
 ```typescript
-import { deploy_token } from "solana-agent-kit";
+import { deploy_token } from "Flow-agent-kit";
 
 const result = await deploy_token(
   agent,
-  9,                // decimals
-  1000000          // initial supply
+  9, // decimals
+  1000000 // initial supply
 );
 
 console.log("Token Mint Address:", result.mint.toString());
 ```
 
 ### NFT Collection Creation
+
 ```typescript
-import { deploy_collection } from "solana-agent-kit";
+import { deploy_collection } from "Flow-agent-kit";
 
 const collection = await deploy_collection(agent, {
   name: "My NFT Collection",
   uri: "https://arweave.net/metadata.json",
-  royaltyBasisPoints: 500,  // 5%
+  royaltyBasisPoints: 500, // 5%
   creators: [
     {
       address: "creator-wallet-address",
@@ -80,10 +88,12 @@ const collection = await deploy_collection(agent, {
 ## Best Practices
 
 ### Environment Setup
+
 - Verify `.env` file contains correct and secure values
 - Ensure all required environment variables are set
 
 ### Testing
+
 - Maintain comprehensive test coverage
 - Monitor console logs during testing
 - Clean up test assets after deployment
@@ -93,15 +103,18 @@ const collection = await deploy_collection(agent, {
 ### Test Failures
 
 #### Missing Environment Variables
+
 - **Issue:** Tests fail due to missing environment variables
 - **Solution:** Check `.env` file for all required variables
 
 #### Network Problems
+
 - **Issue:** Network-related errors
-- **Solution:** Verify internet connection and Solana RPC endpoint accessibility
+- **Solution:** Verify internet connection and Flow RPC endpoint accessibility
 
 ### Agent Issues
 
 #### Startup Problems
+
 - **Issue:** Agent doesn't prompt for mode selection
-- **Solution:** Verify successful build and dependency installation 
+- **Solution:** Verify successful build and dependency installation

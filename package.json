@@ -1,45 +1,42 @@
 {
-  "name": "solana-agent-kit",
-  "version": "1.2.0",
-  "description": "connect any ai agents to solana protocols",
+  "name": "flow-agent-kit",
+  "version": "1.0.0",
+  "description": "connect any ai agents to flow protocols",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
+  "type": "module",
   "scripts": {
     "build": "tsc",
     "docs": "typedoc src --out docs",
     "test": "ts-node test/index.ts",
-    "generate": "ts-node src/utils/keypair.ts"
+    "generate": "ts-node src/utils/keypair.ts",
+    "lint": "eslint \"src/**/*.ts\"",
+    "lint:fix": "eslint \"src/**/*.ts\" --fix",
+    "format": "prettier --write \"src/**/*.ts\"",
+    "clean": "rm -rf dist",
+    "prepare": "npm run build",
+    "prepublishOnly": "npm test && npm run lint",
+    "dev": "ts-node-dev --respawn --transpile-only src/index.ts"
   },
   "engines": {
     "node": ">=23.1.0",
     "pnpm": ">=8.0.0"
   },
-  "keywords": [],
+  "keywords": [
+    "flow",
+    "blockchain",
+    "ai",
+    "agents"
+  ],
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@bonfida/spl-name-service": "^3.0.7",
-    "@coral-xyz/anchor": "0.29",
-    "@langchain/core": "^0.3.18",
+    "@onflow/fcl": "^1.9.0",
+    "@onflow/types": "^1.2.1",
+    "@langchain/core": "^0.1.0",
     "@langchain/groq": "^0.1.2",
     "@langchain/langgraph": "^0.2.27",
     "@langchain/openai": "^0.3.13",
-    "@lightprotocol/compressed-token": "^0.17.1",
-    "@lightprotocol/stateless.js": "^0.17.1",
-    "@metaplex-foundation/mpl-core": "^1.1.1",
-    "@metaplex-foundation/mpl-token-metadata": "^3.3.0",
-    "@metaplex-foundation/mpl-toolbox": "^0.9.4",
-    "@metaplex-foundation/umi": "^0.9.2",
-    "@metaplex-foundation/umi-bundle-defaults": "^0.9.2",
-    "@metaplex-foundation/umi-web3js-adapters": "^0.9.2",
-    "@orca-so/common-sdk": "0.6.4",
-    "@orca-so/whirlpools-sdk": "^0.13.12",
-    "@pythnetwork/price-service-client": "^1.9.0",
-    "@raydium-io/raydium-sdk-v2": "0.1.95-alpha",
-    "@solana/spl-token": "^0.4.9",
-    "@solana/web3.js": "^1.95.4",
-    "bn.js": "^5.2.1",
-    "bs58": "^6.0.0",
     "decimal.js": "^10.4.3",
     "dotenv": "^16.4.5",
     "form-data": "^4.0.1",
@@ -48,9 +45,15 @@
     "typedoc": "^0.26.11"
   },
   "devDependencies": {
-    "@types/bn.js": "^5.1.5",
     "@types/node": "^22.9.0",
+    "@typescript-eslint/eslint-plugin": "^8.18.2",
+    "@typescript-eslint/parser": "^8.18.2",
+    "eslint": "^9.17.0",
+    "eslint-config-prettier": "^9.1.0",
+    "eslint-plugin-prettier": "^5.2.1",
+    "prettier": "^3.4.2",
     "ts-node": "^10.9.2",
+    "ts-node-dev": "^2.0.0",
     "typescript": "^5.7.2"
   }
 }

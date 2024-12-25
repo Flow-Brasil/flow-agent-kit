@@ -1,4 +1,30 @@
-import { PublicKey } from "@solana/web3.js";
+export type FlowNetwork = 'mainnet' | 'testnet' | 'emulator';
+
+export interface TokenDeployment {
+  tokenId: string;
+  transactionId: string;
+}
+
+export interface CollectionDeployment {
+  collectionId: string;
+  transactionId: string;
+}
+
+export interface NFTMetadata {
+  name: string;
+  description: string;
+  image: string;
+  attributes?: Array<{
+    trait_type: string;
+    value: string | number;
+  }>;
+}
+
+export interface TransactionResult {
+  status: 'success' | 'error';
+  transactionId?: string;
+  error?: string;
+}
 
 export interface Creator {
   address: string;
@@ -12,15 +38,9 @@ export interface CollectionOptions {
   creators?: Creator[];
 }
 
-// Add return type interface
-export interface CollectionDeployment {
-  collectionAddress: PublicKey;
-  signature: Uint8Array;
-}
-
 export interface MintCollectionNFTResponse {
-  mint: PublicKey;
-  metadata: PublicKey;
+  mint: string;
+  metadata: string;
 }
 
 export interface PumpFunTokenOptions {
@@ -39,9 +59,6 @@ export interface PumpfunLaunchResponse {
   error?: string;
 }
 
-/**
- * Lulo Account Details response format
- */
 export interface LuloAccountDetailsResponse {
   totalValue: number;
   interestEarned: number;
@@ -71,7 +88,7 @@ export interface JupiterTokenData {
 }
 
 export interface FetchPriceResponse {
-  status: "success" | "error";
+  status: 'success' | 'error';
   tokenId?: string;
   priceInUSDC?: string;
   message?: string;
@@ -79,7 +96,7 @@ export interface FetchPriceResponse {
 }
 
 export interface PythFetchPriceResponse {
-  status: "success" | "error";
+  status: 'success' | 'error';
   priceFeedID: string;
   price?: string;
   message?: string;

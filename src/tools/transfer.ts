@@ -1,73 +1,90 @@
-import { SolanaAgentKit } from "../index";
-import { 
-  PublicKey, 
-  SystemProgram, 
-  Transaction 
-} from "@solana/web3.js";
-import { LAMPORTS_PER_SOL } from "@solana/web3.js";
-import { 
-  getAssociatedTokenAddress, 
-  createTransferInstruction,
-  getMint
-} from "@solana/spl-token";
+import { FlowAgentKit } from '../index';
+import * as fcl from '@onflow/fcl';
+import * as types from '@onflow/types';
 
 /**
- * Transfer SOL or SPL tokens to a recipient
- * @param agent SolanaAgentKit instance
- * @param to Recipient's public key
+ * Transfer FLOW or other tokens to a recipient
+ * @param agent FlowAgentKit instance
+ * @param to Recipient's address
  * @param amount Amount to transfer
- * @param mint Optional mint address for SPL tokens
- * @returns Transaction signature
+ * @param tokenIdentifier Optional token identifier for non-FLOW tokens
+ * @returns Transaction ID
  */
 export async function transfer(
-  agent: SolanaAgentKit,
-  to: PublicKey,
+  agent: FlowAgentKit,
+  to: string,
   amount: number,
-  mint?: PublicKey
+  tokenIdentifier?: string
 ): Promise<string> {
   try {
-    let tx: string;
+    let cadence: string;
+    let args: Parameters<typeof fcl.arg>[];
 
-    if (!mint) {
-      // Transfer native SOL
-      const transaction = new Transaction().add(
-        SystemProgram.transfer({
-          fromPubkey: agent.wallet_address,
-          toPubkey: to,
-          lamports: amount * LAMPORTS_PER_SOL
-        })
-      );
+    if (!tokenIdentifier) {
+      // Transfer native FLOW
+      cadence = `
+        import FungibleToken from 0xFungibleToken
+        import FlowToken from 0xFlowToken
+        
+        transaction(amount: UFix64, recipient: Address) {
+          prepare(signer: AuthAccount) {
+            let payment <- signer.borrow<&FlowToken.Vault>(from: /storage/flowTokenVault)!
+              .withdraw(amount: amount)
+            
+            let recipientAccount = getAccount(recipient)
+            let receiverRef = recipientAccount.getCapability(/public/flowTokenReceiver)!
+              .borrow<&{FungibleToken.Receiver}>()
+              ?? panic("Could not borrow receiver reference")
+            
+            receiverRef.deposit(from: <-payment)
+          }
+        }
+      `;
 
-      tx = await agent.connection.sendTransaction(
-        transaction,
-        [agent.wallet]
-      );
+      args = [
+        [amount.toFixed(8), types.UFix64],
+        [to, types.Address],
+      ];
     } else {
-      // Transfer SPL token
-      const fromAta = await getAssociatedTokenAddress(mint, agent.wallet_address);
-      const toAta = await getAssociatedTokenAddress(mint, to);
-      
-      // Get mint info to determine decimals
-      const mintInfo = await getMint(agent.connection, mint);
-      const adjustedAmount = amount * Math.pow(10, mintInfo.decimals);
+      // Transfer custom token
+      cadence = `
+        import FungibleToken from 0xFungibleToken
+        
+        transaction(amount: UFix64, recipient: Address) {
+          prepare(signer: AuthAccount) {
+            let token = signer.borrow<&FungibleToken.Vault>(from: /storage/${tokenIdentifier}Vault)
+              ?? panic("Could not borrow token vault")
+            
+            let payment <- token.withdraw(amount: amount)
+            
+            let recipientAccount = getAccount(recipient)
+            let receiverRef = recipientAccount.getCapability(/public/${tokenIdentifier}Receiver)
+              .borrow<&{FungibleToken.Receiver}>()
+              ?? panic("Could not borrow receiver reference")
+            
+            receiverRef.deposit(from: <-payment)
+          }
+        }
+      `;
 
-      const transaction = new Transaction().add(
-        createTransferInstruction(
-          fromAta,
-          toAta,
-          agent.wallet_address,
-          adjustedAmount
-        )
-      );
-
-      tx = await agent.connection.sendTransaction(
-        transaction,
-        [agent.wallet]
-      );
+      args = [
+        [amount.toFixed(8), types.UFix64],
+        [to, types.Address],
+      ];
     }
 
-    return tx;
-  } catch (error: any) {
-    throw new Error(`Transfer failed: ${error.message}`);
+    const transactionId = await fcl.mutate({
+      cadence,
+      args: () => args.map(([value, type]) => fcl.arg(value, type)),
+      proposer: fcl.authz,
+      payer: fcl.authz,
+      authorizations: [fcl.authz],
+      limit: 9999,
+    });
+
+    return transactionId;
+  } catch (error: unknown) {
+    const errorMessage = error instanceof Error ? error.message : 'Unknown error';
+    throw new Error(`Transfer failed: ${errorMessage}`);
   }
 }

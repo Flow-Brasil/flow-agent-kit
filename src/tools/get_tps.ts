@@ -1,6 +1,6 @@
-import { SolanaAgentKit } from "../index";
+import { FlowAgentKit } from '../index';
 
-export async function getTPS(agent: SolanaAgentKit): Promise<number> {
+export async function getTPS(agent: FlowAgentKit): Promise<number> {
   const perfSamples = await agent.connection.getRecentPerformanceSamples();
 
   if (
@@ -8,7 +8,7 @@ export async function getTPS(agent: SolanaAgentKit): Promise<number> {
     !perfSamples[0]?.numTransactions ||
     !perfSamples[0]?.samplePeriodSecs
   ) {
-    throw new Error("No performance samples available");
+    throw new Error('No performance samples available');
   }
 
   const tps = perfSamples[0].numTransactions / perfSamples[0].samplePeriodSecs;

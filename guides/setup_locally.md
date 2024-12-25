@@ -1,6 +1,6 @@
 # How to Setup Locally
 
-Setting up the **Solana Agent Kit** on your local machine involves cloning the repository, installing dependencies, configuring environment variables, and building the project. Follow the steps below to get started.
+Setting up the **Flow Agent Kit** on your local machine involves cloning the repository, installing dependencies, configuring environment variables, and building the project. Follow the steps below to get started.
 
 ## Prerequisites
 
@@ -11,18 +11,21 @@ Setting up the **Solana Agent Kit** on your local machine involves cloning the r
 ## Step-by-Step Guide
 
 1. **Clone the Repository**
+
    ```bash
-   git clone https://github.com/yourusername/solana-agent-kit.git
+   git clone https://github.com/yourusername/Flow-agent-kit.git
    ```
 
 2. **Navigate to the Project Directory**
+
    ```bash
-   cd solana-agent-kit
+   cd Flow-agent-kit
    ```
 
 3. **Install Dependencies**
 
    The project uses `pnpm` for package management. Install all necessary dependencies by running:
+
    ```bash
    pnpm install
    ```
@@ -30,21 +33,23 @@ Setting up the **Solana Agent Kit** on your local machine involves cloning the r
 4. **Configure Environment Variables**
 
    Create a `.env` file in the root directory of the project to store your environment variables securely. This file should include the following variables:
+
    ```env
    OPENAI_API_KEY=your_openai_api_key_here
    RPC_URL=your_rpc_url
-   SOLANA_PRIVATE_KEY=your_solana_private_key_here
+   Flow_PRIVATE_KEY=your_Flow_private_key_here
    ```
 
    - **OPENAI_API_KEY**: Your OpenAI API key for generating images and interacting with OpenAI services.
-   - **RPC_URL**: Your RPC_URL for Solana blockchain interactions.
-   - **SOLANA_PRIVATE_KEY**: Your Solana wallet's private key in base58 format.
+   - **RPC_URL**: Your RPC_URL for Flow blockchain interactions.
+   - **Flow_PRIVATE_KEY**: Your Flow wallet's private key in base58 format.
 
    **Note:** Ensure that the `.env` file is added to `.gitignore` to prevent exposing sensitive information.
 
 5. **Build the Project**
 
    Compile the TypeScript code to JavaScript using the build script:
+
    ```bash
    pnpm run build
    ```
@@ -54,6 +59,7 @@ Setting up the **Solana Agent Kit** on your local machine involves cloning the r
 6. **Generate Documentation (Optional)**
 
    If you wish to generate the project documentation, use the following command:
+
    ```bash
    pnpm run docs
    ```
@@ -65,6 +71,7 @@ Setting up the **Solana Agent Kit** on your local machine involves cloning the r
 **Additional Information:**
 
 - **Git Configuration:** Ensure that Git is properly configured with your user name and email. You can set them using:
+
   ```bash
   git config --global user.name "Your Name"
   git config --global user.email "your.email@example.com"
@@ -73,6 +80,7 @@ Setting up the **Solana Agent Kit** on your local machine involves cloning the r
 - **Verifying Installation:**
 
   After installing dependencies and building the project, you can verify the installation by running:
+
   ```bash
   pnpm run build
   pnpm run test
@@ -80,4 +88,4 @@ Setting up the **Solana Agent Kit** on your local machine involves cloning the r
 
   Ensure that all tests pass successfully.
 
---- 
+---

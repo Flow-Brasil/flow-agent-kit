@@ -1,12 +1,12 @@
 # How to Add Your Own Tool
 
-Extending the **Solana Agent Kit** with custom tools allows you to add specialized functionalities tailored to your needs. This guide walks you through creating and integrating a new tool into the existing framework.
+Extending the **Flow Agent Kit** with custom tools allows you to add specialized functionalities tailored to your needs. This guide walks you through creating and integrating a new tool into the existing framework.
 
 ## Overview
 
 1. Create a new tool file
 2. Implement the tool class
-3. Implement supporting functions in SolanaAgentKit
+3. Implement supporting functions in FlowAgentKit
 4. Export the new tool
 5. Integrate the tool into the agent
 6. Use the custom tool
@@ -21,19 +21,19 @@ Create a new TypeScript file in the `src/tools/` directory for your tool (e.g., 
 
 ```typescript:src/langchain/index.ts
 import { Tool } from "langchain/tools";
-import { SolanaAgentKit } from "../agent";
+import { FlowAgentKit } from "../agent";
 
 export class CustomTool extends Tool {
   name = "custom_tool";
   description = "Description of what the custom tool does.";
 
-  constructor(private solanaKit: SolanaAgentKit) {
+  constructor(private FlowKit: FlowAgentKit) {
     super();
   }
 
   protected async _call(input: string): Promise<string> {
     try {
-      const result = await this.solanaKit.customFunction(input);
+      const result = await this.FlowKit.customFunction(input);
       return JSON.stringify({
         status: "success",
         message: "Custom tool executed successfully",
@@ -50,10 +50,10 @@ export class CustomTool extends Tool {
 }
 ```
 
-### 3. Add Supporting Functions to SolanaAgentKit
+### 3. Add Supporting Functions to FlowAgentKit
 
 ```typescript:src/agent/index.ts
-export class SolanaAgentKit {
+export class FlowAgentKit {
   // ... existing code ...
 
   async customFunction(input: string): Promise<string> {
@@ -76,7 +76,7 @@ export * from "./custom_tool"; // Add your new tool
 ```typescript:src/langchain/index.ts
 import { CustomTool } from "../tools/custom_tool";
 
-export function createSolanaTools(agent: SolanaAgentKit) {
+export function createFlowTools(agent: FlowAgentKit) {
   return [
     // ... existing tools ...
     new CustomTool(agent),
@@ -89,16 +89,16 @@ export function createSolanaTools(agent: SolanaAgentKit) {
 Add a code example in the `README.md` file.
 
 ```typescript
-import { SolanaAgentKit, createSolanaTools } from "solana-agent-kit";
+import { FlowAgentKit, createFlowTools } from "Flow-agent-kit";
 
-const agent = new SolanaAgentKit(
+const agent = new FlowAgentKit(
   "your-wallet-private-key-as-base58",
-  "https://api.mainnet-beta.solana.com",
+  "https://api.mainnet-beta.Flow.com",
   "your-openai-api-key"
 );
 
-const tools = createSolanaTools(agent);
-const customTool = tools.find(tool => tool.name === "custom_tool");
+const tools = createFlowTools(agent);
+const customTool = tools.find((tool) => tool.name === "custom_tool");
 
 if (customTool) {
   const result = await customTool._call("your-input");
@@ -120,19 +120,19 @@ Here's a complete example of implementing a tool to fetch token prices:
 
 ```typescript:src/tools/fetch_token_price.ts
 import { Tool } from "langchain/tools";
-import { SolanaAgentKit } from "../agent";
+import { FlowAgentKit } from "../agent";
 
 export class FetchTokenPriceTool extends Tool {
   name = "fetch_token_price";
   description = "Fetches the current price of a specified token.";
 
-  constructor(private solanaKit: SolanaAgentKit) {
+  constructor(private FlowKit: FlowAgentKit) {
     super();
   }
 
   protected async _call(tokenSymbol: string): Promise<string> {
     try {
-      const price = await this.solanaKit.getTokenPrice(tokenSymbol);
+      const price = await this.FlowKit.getTokenPrice(tokenSymbol);
       return JSON.stringify({
         status: "success",
         message: `Price fetched successfully for ${tokenSymbol}.`,
@@ -149,10 +149,10 @@ export class FetchTokenPriceTool extends Tool {
 }
 ```
 
-Add the supporting function to SolanaAgentKit:
+Add the supporting function to FlowAgentKit:
 
 ```typescript:src/agent/index.ts
-export class SolanaAgentKit {
+export class FlowAgentKit {
   async getTokenPrice(tokenSymbol: string): Promise<number> {
     const mockPrices: { [key: string]: number } = {
       SOL: 150,
