@@ -1,154 +1,86 @@
-# Contributing to Flow Agent Kit
+# Contribuindo para o Flow Agent Kit
 
-First off, thank you for considering contributing to Flow Agent Kit! 🎉 Your contributions are **greatly appreciated**.
+Obrigado por considerar contribuir para o Flow Agent Kit! Este documento fornece diretrizes para contribuir com o projeto.
 
-## Table of Contents
+## Código de Conduta
 
-- [Contributing to Flow Agent Kit](#contributing-to-Flow-agent-kit)
-  - [Table of Contents](#table-of-contents)
-  - [Code of Conduct](#code-of-conduct)
-  - [How Can I Contribute?](#how-can-i-contribute)
-    - [Reporting Bugs](#reporting-bugs)
-    - [Suggesting Enhancements](#suggesting-enhancements)
-    - [Your First Code Contribution](#your-first-code-contribution)
-    - [Pull Requests](#pull-requests)
-  - [Style Guides](#style-guides)
-    - [Code Style](#code-style)
-    - [Commit Messages](#commit-messages)
-    - [Naming Conventions](#naming-conventions)
-  - [Development Setup](#development-setup)
-    - [Prerequisites](#prerequisites)
-    - [Installation](#installation)
-    - [Building the Project](#building-the-project)
-    - [Running Tests](#running-tests)
-    - [Generating Documentation](#generating-documentation)
-  - [Security](#security)
-  - [License](#license)
+Este projeto e todos os participantes estão sob o [Código de Conduta do Flow](https://flow.com/policies/code-of-conduct). Ao participar, você concorda em seguir suas diretrizes.
 
-## Code of Conduct
+## Como posso contribuir?
 
-This project adheres to the [Contributor Covenant Code of Conduct](https://www.contributor-covenant.org/version/2/0/code_of_conduct/). By participating, you are expected to uphold this code. Please report unacceptable behavior to [aryan@sendai.fun](mailto:aryan@sendai.fun).
+### Reportando Bugs
 
-## How Can I Contribute?
+Antes de criar um bug report, por favor verifique a [lista de issues](../../issues) para ver se o problema já foi reportado. Se você encontrar uma issue fechada que parece ser igual ao seu problema, abra uma nova issue e inclua um link para a issue original.
 
-### Reporting Bugs
+#### Como submeter um bom bug report
 
-**Great**! Opening an issue is the best way to help us improve. Here's how you can report a bug:
+- Use um título claro e descritivo
+- Descreva os passos exatos para reproduzir o problema
+- Forneça exemplos específicos (código ou ações executadas)
+- Descreva o comportamento observado e o comportamento esperado
+- Inclua screenshots e logs de erro se possível
 
-1. **Search** the [existing issues](https://github.com/sendaifun/Flow-agent-kit/issues) to make sure it hasn't been reported.
-2. **Open a new issue** and fill out the template with as much information as possible.
-3. **Provide reproduction steps** if applicable.
+### Sugerindo Melhorias
 
-### Suggesting Enhancements
-
-We welcome your ideas for improving Flow Agent Kit! To suggest an enhancement:
-
-1. **Search** the [existing issues](https://github.com/sendaifun/Flow-agent-kit/issues) to see if it's already been suggested.
-2. **Open a new issue** and describe your idea in detail.
-
-### Your First Code Contribution
-
-Unsure where to start? You can help out by:
-
-- Fixing simple bugs.
-- Improving documentation.
-- Adding tests.
-
-Check out the [Good First Issues](https://github.com/sendaifun/Flow-agent-kit/issues?q=is%3Aissue+is%3Aopen+label%3A%22good+first+issue%22) to get started!
+Se você tem uma ideia para melhorar o projeto, gostaríamos de ouvir! Crie uma issue descrevendo sua sugestão.
 
 ### Pull Requests
 
-1. **Fork** the repository.
-2. **Create** a new branch for your feature or bugfix.
-   ```bash
-   git checkout -b feature/your-feature-name
-   ```
-3. **Commit** your changes with clear and descriptive messages.
-4. **Push** to your fork.
-   ```bash
-   git push origin feature/your-feature-name
-   ```
-5. **Open a Pull Request** against the `main` branch of this repository.
+1. Fork o repositório
+2. Crie um branch para sua feature (`git checkout -b feature/AmazingFeature`)
+3. Faça suas alterações
+4. Execute os testes e o linter
+5. Commit suas mudanças (`git commit -m 'feat: add amazing feature'`)
+6. Push para o branch (`git push origin feature/AmazingFeature`)
+7. Abra um Pull Request
 
-## Style Guides
+#### Convenções de Commit
 
-### Code Style
+Usamos [Conventional Commits](https://www.conventionalcommits.org/). Exemplos:
 
-- **Language**: TypeScript
-- **Formatting**: Follow the existing codebase formatting. Consider using [Prettier](https://prettier.io/) for consistent code formatting.
-- **Code Quality**: Adhere to the code quality rules defined in `.eslintrc`. Ensure all checks pass before submitting a PR.
+- `feat: adicionar suporte a novos tokens Flow`
+- `fix: corrigir erro na transferência de tokens`
+- `docs: atualizar documentação da API`
+- `style: formatar código`
+- `refactor: melhorar estrutura do código`
+- `test: adicionar testes para transferência`
+- `chore: atualizar dependências`
 
-### Commit Messages
+### Desenvolvimento Local
 
-Use [Conventional Commits](https://www.conventionalcommits.org/en/v1.0.0/) for your commit messages. Examples:
+1. Clone o repositório
+2. Instale as dependências: `pnpm install`
+3. Execute os testes: `pnpm test`
+4. Execute o linter: `pnpm lint`
 
-- `feat: add ability to deploy new SPL token`
-- `fix: handle edge case when deploying collection`
-- `docs: update README with new usage examples`
+### Estrutura do Projeto
 
-### Naming Conventions
-
-- **Variables and Functions**: `camelCase`
-- **Classes and Types**: `PascalCase`
-- **Constants**: `UPPER_SNAKE_CASE`
-
-## Development Setup
-
-### Prerequisites
-
-- **Node.js**: v23.x or higher
-- **npm**: v10.x or higher
-- **Git**: Installed and configured
-
-### Installation
-
-1. **Clone** the repository:
-   ```bash
-   git clone https://github.com/yourusername/Flow-agent-kit.git
-   ```
-2. **Navigate** to the project directory:
-   ```bash
-   cd Flow-agent-kit
-   ```
-3. **Install** dependencies:
-   ```bash
-   pnpm install
-   ```
-
-### Building the Project
-
-To compile the TypeScript code:
-
-```bash
-pnpm run build
+```
+src/
+├── agent/         # Classe principal do agente
+├── langchain/     # Ferramentas LangChain
+├── tools/         # Ferramentas de interação com Flow
+├── types/         # Definições de tipos
+└── utils/         # Utilitários
 ```
 
-### Running Tests
+### Documentação
 
-To execute the test suite:
+- Mantenha a documentação atualizada
+- Use JSDoc para documentar funções e classes
+- Atualize o README.md quando necessário
+- Mantenha o CHANGELOG.md atualizado
 
-```bash
-pnpm run test
-```
+## Dúvidas?
 
-### Generating Documentation
+Se você tiver alguma dúvida sobre como contribuir, sinta-se à vontade para:
 
-To generate the project documentation using TypeDoc:
+1. Ler nossa [documentação](../../docs)
+2. Abrir uma issue com sua dúvida
+3. Entrar em contato com a equipe
 
-```bash
-npm run docs
-```
+## Licença
 
-The documentation will be available in the `docs/` directory.
-
-## Security
-
-This toolkit handles sensitive information such as private keys and API keys. **Ensure you never commit `.env` files or any sensitive data**. Review the `.gitignore` to confirm that sensitive files are excluded.
-
-For security vulnerabilities, please follow the [responsible disclosure](mailto:aryan@sendai.fun) process.
-
-## License
-
-This project is licensed under the [ISC License](LICENSE).
+Ao contribuir para este projeto, você concorda que suas contribuições serão licenciadas sob a mesma licença do projeto.
 
 ---
