@@ -15,6 +15,12 @@ declare module '@onflow/fcl' {
     Address: string;
   }
 
+  export interface FlowBlock {
+    height: number;
+    timestamp: number;
+    collectionGuarantees: unknown[];
+  }
+
   export type ArgFunction = (value: unknown, type: string) => unknown;
 
   export const config: (config: Partial<FlowConfig>) => void;
@@ -33,6 +39,9 @@ declare module '@onflow/fcl' {
     authorizations: unknown[];
     limit: number;
   }): Promise<string>;
+  export function send(args: unknown[]): Promise<unknown>;
+  export function decode(response: unknown): Promise<FlowBlock>;
+  export function getBlock(isSealed: boolean, height?: number): unknown;
 }
 
 declare module '@onflow/types' {

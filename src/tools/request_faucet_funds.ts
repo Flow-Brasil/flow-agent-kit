@@ -1,22 +1,29 @@
 import { FlowAgentKit } from '../index';
-import { LAMPORTS_PER_SOL } from '@Flow/web3.js';
 
 /**
- * Request SOL from the Flow faucet (devnet/testnet only)
- * @param agent - FlowAgentKit instance
- * @returns Transaction signature
- * @throws Error if the request fails or times out
+ * Request test tokens from the Flow testnet faucet
+ * @param agent FlowAgentKit instance
+ * @returns Transaction ID of the faucet request
  */
 export async function request_faucet_funds(agent: FlowAgentKit): Promise<string> {
-  const tx = await agent.connection.requestAirdrop(agent.wallet_address, 5 * LAMPORTS_PER_SOL);
+  if (!agent.address) {
+    throw new Error('Agent address not initialized');
+  }
 
-  const latestBlockHash = await agent.connection.getLatestBlockhash();
-
-  await agent.connection.confirmTransaction({
-    signature: tx,
-    blockhash: latestBlockHash.blockhash,
-    lastValidBlockHeight: latestBlockHash.lastValidBlockHeight,
+  const response = await fetch('https://testnet-faucet.onflow.org/fund-account', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({
+      address: agent.address,
+    }),
   });
 
-  return tx;
+  if (!response.ok) {
+    throw new Error(`Faucet request failed: ${response.statusText}`);
+  }
+
+  const data = await response.json() as { transactionId: string };
+  return data.transactionId;
 }

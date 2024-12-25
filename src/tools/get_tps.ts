@@ -1,17 +1,22 @@
 import { FlowAgentKit } from '../index';
+import * as fcl from '@onflow/fcl';
 
-export async function getTPS(agent: FlowAgentKit): Promise<number> {
-  const perfSamples = await agent.connection.getRecentPerformanceSamples();
+/**
+ * Get the current transactions per second (TPS) of the Flow network
+ * @param agent FlowAgentKit instance
+ * @returns Current TPS as a number
+ */
+export async function get_tps(agent: FlowAgentKit): Promise<number> {
+  try {
+    const latestBlock = await fcl.send([fcl.getBlock(true)]).then(fcl.decode);
+    const previousBlock = await fcl.send([fcl.getBlock(false, latestBlock.height - 1)]).then(fcl.decode);
 
-  if (
-    !perfSamples.length ||
-    !perfSamples[0]?.numTransactions ||
-    !perfSamples[0]?.samplePeriodSecs
-  ) {
-    throw new Error('No performance samples available');
+    const timeDiff = (latestBlock.timestamp - previousBlock.timestamp) / 1000; // em segundos
+    const txCount = latestBlock.collectionGuarantees.length;
+
+    return txCount / timeDiff;
+  } catch (error: unknown) {
+    const errorMessage = error instanceof Error ? error.message : 'Unknown error';
+    throw new Error(`Failed to get TPS: ${errorMessage}`);
   }
-
-  const tps = perfSamples[0].numTransactions / perfSamples[0].samplePeriodSecs;
-
-  return tps;
 }
