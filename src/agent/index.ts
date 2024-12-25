@@ -43,6 +43,8 @@ export class FlowAgentKit {
   ): Promise<string> {
     const transactionId = await fcl.mutate({
       cadence: `
+        #!cadence v1.0
+
         import FungibleToken from 0xFungibleToken
         
         transaction(name: String, symbol: String, initialSupply: UFix64) {
@@ -76,6 +78,8 @@ export class FlowAgentKit {
 
     const balance = await fcl.query({
       cadence: `
+        #!cadence v1.0
+
         import FungibleToken from 0xFungibleToken
         
         pub fun main(address: Address): UFix64 {
@@ -99,6 +103,8 @@ export class FlowAgentKit {
   public async transfer(to: string, amount: number, tokenIdentifier?: string): Promise<string> {
     const transactionId = await fcl.mutate({
       cadence: `
+        #!cadence v1.0
+
         import FungibleToken from 0xFungibleToken
         
         transaction(recipient: Address, amount: UFix64) {
@@ -127,6 +133,8 @@ export class FlowAgentKit {
   public async deployCollection(name: string, description: string, baseURI: string): Promise<string> {
     const transactionId = await fcl.mutate({
       cadence: `
+        #!cadence v1.0
+
         import NonFungibleToken from 0xNonFungibleToken
         
         transaction(name: String, description: String, baseURI: String) {
