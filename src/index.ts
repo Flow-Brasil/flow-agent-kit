@@ -1,6 +1,8 @@
 import { FlowAgentKit } from './agent/index.js';
 import dotenv from 'dotenv';
 
+export { FlowAgentKit };
+
 // Carregar variáveis de ambiente
 dotenv.config();
 

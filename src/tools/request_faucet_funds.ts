@@ -1,4 +1,4 @@
-import { FlowAgentKit } from '../index';
+import { FlowAgentKit } from '../agent/index.js';
 
 /**
  * Request test tokens from the Flow testnet faucet

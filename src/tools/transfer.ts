@@ -1,4 +1,4 @@
-import { FlowAgentKit } from '../index';
+import { FlowAgentKit } from '../agent/index.js';
 import * as fcl from '@onflow/fcl';
 import * as types from '@onflow/types';
 
@@ -23,6 +23,8 @@ export async function transfer(
     if (!tokenIdentifier) {
       // Transfer native FLOW
       cadence = `
+        #!cadence v1.0
+
         import FungibleToken from 0xFungibleToken
         import FlowToken from 0xFlowToken
         
@@ -48,6 +50,8 @@ export async function transfer(
     } else {
       // Transfer custom token
       cadence = `
+        #!cadence v1.0
+
         import FungibleToken from 0xFungibleToken
         
         transaction(amount: UFix64, recipient: Address) {

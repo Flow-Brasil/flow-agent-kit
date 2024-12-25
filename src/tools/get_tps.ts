@@ -1,4 +1,4 @@
-import { FlowAgentKit } from '../index';
+import { FlowAgentKit } from '../agent/index.js';
 import * as fcl from '@onflow/fcl';
 
 /**

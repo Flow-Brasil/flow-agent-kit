@@ -1,4 +1,4 @@
-import { FlowAgentKit } from '../index';
+import { FlowAgentKit } from '../agent/index.js';
 
 /**
  * Get the balance of FLOW or a fungible token for the agent's wallet
