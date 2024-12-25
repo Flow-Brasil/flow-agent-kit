@@ -1,4 +1,4 @@
-export type FlowNetwork = 'mainnet' | 'testnet' | 'emulator';
+export type FlowNetwork = "mainnet" | "testnet" | "emulator";
 
 export interface TokenDeployment {
   tokenId: string;
@@ -21,7 +21,7 @@ export interface NFTMetadata {
 }
 
 export interface TransactionResult {
-  status: 'success' | 'error';
+  status: "success" | "error";
   transactionId?: string;
   error?: string;
 }
@@ -43,62 +43,13 @@ export interface MintCollectionNFTResponse {
   metadata: string;
 }
 
-export interface PumpFunTokenOptions {
-  twitter?: string;
-  telegram?: string;
-  website?: string;
-  initialLiquiditySOL?: number;
-  slippageBps?: number;
-  priorityFee?: number;
-}
-
-export interface PumpfunLaunchResponse {
-  signature: string;
-  mint: string;
-  metadataUri?: string;
-  error?: string;
-}
-
-export interface LuloAccountDetailsResponse {
-  totalValue: number;
-  interestEarned: number;
-  realtimeApy: number;
-  settings: {
-    owner: string;
-    allowedProtocols: string | null;
-    homebase: string | null;
-    minimumRate: string;
-  };
-}
-
-export interface JupiterTokenData {
+export interface TokenData {
   address: string;
   name: string;
   symbol: string;
   decimals: number;
-  tags: string[];
-  logoURI: string;
-  daily_volume: number;
-  freeze_authority: string | null;
-  mint_authority: string | null;
-  permanent_delegate: string | null;
-  extensions: {
-    coingeckoId?: string;
-  };
-}
-
-export interface FetchPriceResponse {
-  status: 'success' | 'error';
-  tokenId?: string;
-  priceInUSDC?: string;
-  message?: string;
-  code?: string;
-}
-
-export interface PythFetchPriceResponse {
-  status: 'success' | 'error';
-  priceFeedID: string;
-  price?: string;
-  message?: string;
-  code?: string;
+  totalSupply: string;
+  icon?: string;
+  website?: string;
+  description?: string;
 }

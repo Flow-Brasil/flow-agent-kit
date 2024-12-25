@@ -9,7 +9,6 @@
     "build": "tsc",
     "docs": "typedoc src --out docs",
     "test": "ts-node test/index.ts",
-    "generate": "ts-node src/utils/keypair.ts",
     "lint": "eslint \"src/**/*.ts\"",
     "lint:fix": "eslint \"src/**/*.ts\" --fix",
     "format": "prettier --write \"src/**/*.ts\"",
