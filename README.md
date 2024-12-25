@@ -15,7 +15,7 @@ Using Flow Agent Kit as an NPM package offers several advantages:
 
 1. **Easy Installation**
 
-   - Install with a single command: `pnpm add flow-agent-kit`
+   - Install with a single command: `pnpm add @coflow/flow-agent-kit`
    - Automatic dependency management
    - No manual repository cloning needed
 
@@ -78,7 +78,7 @@ After installation, you can use the kit in two ways:
 ### Basic Usage Example:
 
 ```typescript
-import { FlowAgentKit } from 'flow-agent-kit';
+import { FlowAgentKit } from '@coflow/flow-agent-kit';
 
 // Initialize the agent
 const agent = new FlowAgentKit('your_private_key', 'mainnet', 'your_gemini_api_key');
@@ -94,32 +94,35 @@ console.log('Response:', response);
 
 ## Installation
 
-1. Clone the repository:
+You can install the package directly from NPM:
 
+```bash
+pnpm add @coflow/flow-agent-kit
+```
+
+Or clone the repository for development:
+
+1. Clone the repository:
 ```bash
 git clone https://github.com/Flow-Brasil/flow-agent-kit.git
 ```
 
 2. Enter the folder:
-
 ```bash
 cd flow-agent-kit
 ```
 
 3. Install dependencies:
-
 ```bash
 pnpm install
 ```
 
 4. Configure environment variables:
-
 ```bash
 cp .env.example .env
 ```
 
 5. Configure your `.env` file:
-
 ```env
 # Flow wallet private key
 FLOW_PRIVATE_KEY=xxx

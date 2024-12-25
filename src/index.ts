@@ -1,4 +1,15 @@
-import { FlowAgentKit } from './agent/index.js';
+// Re-export da classe principal
+export { FlowAgentKit } from './agent/index.js';
+
+// Re-export dos tipos
+export * from './types/index.js';
+
+// Re-export das ferramentas
+export * from './tools/index.js';
+
+// Re-export das constantes
+export * from './constants/index.js';
+
 import dotenv from 'dotenv';
 
 dotenv.config();
