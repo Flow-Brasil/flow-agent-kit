@@ -14,8 +14,8 @@
     "dev": "node --loader ts-node/esm src/index.ts",
     "test": "jest",
     "prepare": "npm run build",
-    "prepublishOnly": "npm test && npm run lint",
-    "lint": "eslint . --ext .ts"
+    "prepublishOnly": "npm test",
+    "lint": "eslint src/**/*.ts"
   },
   "keywords": [
     "flow",
