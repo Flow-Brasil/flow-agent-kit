@@ -5,15 +5,17 @@ import { FlowNetwork } from '../types';
 /**
  * Main class for interacting with Flow blockchain
  * Provides a unified interface for token operations, NFT management, and trading
- *
- * @class FlowAgentKit
- * @property {string} address - Flow account address
- * @property {string} privateKey - Flow account private key
  */
 export class FlowAgentKit {
   public address: string;
   public openai_api_key: string;
 
+  /**
+   * Creates an instance of FlowAgentKit
+   * @param private_key - Flow account private key
+   * @param network - Flow network to connect to
+   * @param openai_api_key - OpenAI API key for AI features
+   */
   constructor(private_key: string, network: FlowNetwork = 'mainnet', openai_api_key: string) {
     // Configure FCL
     fcl.config({
@@ -27,11 +29,17 @@ export class FlowAgentKit {
     this.openai_api_key = openai_api_key;
   }
 
-  // Token Operations
-  async deployToken(
+  /**
+   * Deploy a new fungible token
+   * @param name - Token name
+   * @param symbol - Token symbol
+   * @param initialSupply - Initial token supply
+   * @returns Transaction ID
+   */
+  public async deployToken(
     name: string,
     symbol: string,
-    initialSupply: number = 1000000
+    initialSupply = 1000000
   ): Promise<string> {
     const transactionId = await fcl.mutate({
       cadence: `
@@ -57,7 +65,13 @@ export class FlowAgentKit {
     return transactionId;
   }
 
-  async getBalance(address?: string, _tokenIdentifier?: string): Promise<number> {
+  /**
+   * Get token balance for an address
+   * @param address - Optional address to check balance for
+   * @param tokenIdentifier - Optional token identifier
+   * @returns Token balance
+   */
+  public async getBalance(address?: string, tokenIdentifier?: string): Promise<number> {
     const targetAddress = address || this.address;
 
     const balance = await fcl.query({
@@ -70,12 +84,19 @@ export class FlowAgentKit {
         }
       `,
       args: (_arg, _t) => [fcl.arg(targetAddress, types.Address)],
-    });
+    }) as string;
 
     return parseFloat(balance);
   }
 
-  async transfer(to: string, amount: number, _tokenIdentifier?: string): Promise<string> {
+  /**
+   * Transfer tokens to another address
+   * @param to - Recipient address
+   * @param amount - Amount to transfer
+   * @param tokenIdentifier - Optional token identifier
+   * @returns Transaction ID
+   */
+  public async transfer(to: string, amount: number, tokenIdentifier?: string): Promise<string> {
     const transactionId = await fcl.mutate({
       cadence: `
         import FungibleToken from 0xFungibleToken
@@ -96,8 +117,14 @@ export class FlowAgentKit {
     return transactionId;
   }
 
-  // NFT Operations
-  async deployCollection(name: string, description: string, baseURI: string): Promise<string> {
+  /**
+   * Deploy a new NFT collection
+   * @param name - Collection name
+   * @param description - Collection description
+   * @param baseURI - Base URI for NFT metadata
+   * @returns Transaction ID
+   */
+  public async deployCollection(name: string, description: string, baseURI: string): Promise<string> {
     const transactionId = await fcl.mutate({
       cadence: `
         import NonFungibleToken from 0xNonFungibleToken
@@ -121,6 +148,4 @@ export class FlowAgentKit {
 
     return transactionId;
   }
-
-  // ... Adicione mais métodos conforme necessário
 }
