@@ -73,12 +73,3 @@ The project benefits the Flow ecosystem by:
 | Maintenance              | - Continuous support<br>- Bug fixes<br>- Security updates<br>- Continuous improvements<br>- Performance monitoring<br>- Documentation updates          | 6 months | - Limited resources<br>- Growing demand<br>- Sustainability<br>- Technical evolution                 | TBD   |
 
 Total funding proposed: TBD
-
-# Team
-
-| Name                | Role                  | Bio                                                                                                                                                                                                                 | Contact                  |
-| ------------------- | --------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------------------------ |
-| Flow Brasil         | Lead Developer        | Specialized team in Flow blockchain with expertise in AI and tool development. Proven track record in open source projects and blockchain ecosystem contributions. Experience in building developer tools and SDKs. | contact@flowbrasil.org   |
-| Community Manager   | Developer Relations   | Experienced in technical community management, documentation, and education. Strong background in blockchain and developer engagement. Track record of growing and nurturing technical communities.                 | community@flowbrasil.org |
-| Senior Engineer     | Architecture          | TypeScript and blockchain specialist focused on security and performance. Extensive experience in SDK development and developer tools. Expert in distributed systems and smart contract development.                | tech@flowbrasil.org      |
-| Security Specialist | Security & Compliance | Blockchain security specialist with relevant certifications and experience in smart contract audits. Background in cryptography and secure system design. Regular contributor to security standards.                | security@flowbrasil.org  |
