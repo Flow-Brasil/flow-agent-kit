@@ -2,30 +2,58 @@
 * text=auto eol=lf
 
 # TypeScript files
-*.ts text
-*.tsx text
+*.ts text diff=typescript
+*.tsx text diff=typescript
+*.d.ts text diff=typescript
 
 # JavaScript files
-*.js text
-*.jsx text
+*.js text diff=javascript
+*.jsx text diff=javascript
+*.cjs text diff=javascript
+*.mjs text diff=javascript
 
 # JSON files
 *.json text
+*.jsonc text
+*.json5 text
+
+# YAML files
+*.yml text
+*.yaml text
 
 # Markdown files
-*.md text
+*.md text diff=markdown
+*.mdx text diff=markdown
 
 # Environment files
 *.env text
 .env.* text
+.envrc text
+
+# Configuration files
+*.toml text
+*.ini text
+*.conf text
+*.config text
+*.lock text
+.editorconfig text
+.prettierrc text
+.eslintrc text
+tsconfig.json text
+package.json text
+pnpm-lock.yaml text
 
 # Documentation
 *.txt text
 *.pdf binary
+*.doc binary
+*.docx binary
+*.rtf binary
 
 # Images
 *.png binary
 *.jpg binary
+*.jpeg binary
 *.gif binary
 *.ico binary
 *.svg text
@@ -35,6 +63,24 @@
 *.eot binary
 *.woff binary
 *.woff2 binary
+
+# Scripts
+*.sh text eol=lf
+*.bash text eol=lf
+*.fish text eol=lf
+*.zsh text eol=lf
+
+# Git files
+.gitattributes text export-ignore
+.gitignore text export-ignore
+.gitkeep text export-ignore
+.gitmodules text export-ignore
+
+# IDE files
+.vscode/* text
+.idea/* text
+*.sublime-project text
+*.sublime-workspace text
 
 # Exclude files from exporting
 .gitattributes export-ignore

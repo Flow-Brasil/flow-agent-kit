@@ -1,21 +1,36 @@
 # Dependencies
 node_modules/
 .pnpm-store/
+.npm/
+.yarn/
+.yarnrc
+.pnp.*
 
 # Build
 dist/
 build/
+out/
+*.tsbuildinfo
 
 # Environment
 .env
 .env.local
 .env.*.local
+.env.development
+.env.test
+.env.production
+.envrc
 
 # IDE
 .idea/
 .vscode/
 *.swp
 *.swo
+*.swn
+*.bak
+*.orig
+*.sublime-workspace
+*.sublime-project
 
 # Logs
 logs/
@@ -24,16 +39,49 @@ npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 pnpm-debug.log*
+lerna-debug.log*
 
 # Testing
 coverage/
+.nyc_output/
+junit.xml
+test-results/
 
 # OS
 .DS_Store
 Thumbs.db
+ehthumbs.db
+Desktop.ini
+$RECYCLE.BIN/
+*.lnk
 
 # TypeScript
 *.tsbuildinfo
+.tscache/
+*.js.map
 
 # Documentation
 docs/
+*.pdf
+*.doc
+*.docx
+*.xls
+*.xlsx
+
+# Temporary files
+*.tmp
+*.temp
+.cache/
+.temp/
+
+# Flow specific
+.flow-sporks/
+flow.json
+flow.private.json
+
+# Misc
+.history/
+.env.me
+*.pem
+.vercel
+.netlify
