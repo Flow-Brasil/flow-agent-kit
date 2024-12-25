@@ -18,10 +18,28 @@ export class FlowAgentKit {
    */
   constructor(private_key: string, network: FlowNetwork = 'mainnet', openai_api_key: string) {
     // Configure FCL
-    fcl.config({
-      'flow.network': network,
-      'app.detail.title': 'Flow Agent Kit',
-    });
+    if (network === 'testnet') {
+      fcl.config({
+        'flow.network': 'testnet',
+        'app.detail.title': 'Flow Agent Kit',
+        'accessNode.api': 'https://rest-testnet.onflow.org',
+        'discovery.wallet': 'https://fcl-discovery.onflow.org/testnet/authn',
+      } as any);
+    } else if (network === 'mainnet') {
+      fcl.config({
+        'flow.network': 'mainnet',
+        'app.detail.title': 'Flow Agent Kit',
+        'accessNode.api': 'https://rest-mainnet.onflow.org',
+        'discovery.wallet': 'https://fcl-discovery.onflow.org/authn',
+      } as any);
+    } else {
+      fcl.config({
+        'flow.network': 'emulator',
+        'app.detail.title': 'Flow Agent Kit',
+        'accessNode.api': 'http://localhost:8888',
+        'discovery.wallet': 'http://localhost:8701/fcl/authn',
+      } as any);
+    }
 
     // Initialize account
     this.address = private_key;
