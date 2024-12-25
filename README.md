@@ -1,104 +1,161 @@
 # Flow Agent Kit
 
-Kit de desenvolvimento para criar agentes de IA que interagem com a blockchain Flow.
+Flow Agent Kit is a development tool that enables the creation of AI agents that interact with the Flow blockchain.
 
-## Características
+## What is it for?
 
-- 🤖 Integração com IA (Google Gemini)
-- 🔗 Interação com a blockchain Flow
-- 💰 Gerenciamento de tokens (fungíveis e não fungíveis)
-- 🔑 Suporte a múltiplas redes (mainnet, testnet, emulator)
+### AI + Blockchain Integration
 
-## Instalação
+- Allows AI agents (using LangChain) to directly interact with the Flow blockchain
+- Can perform operations such as transfers, balance queries, and smart contract deployment
 
-```bash
-pnpm add flow-agent-kit
+### NPM Package Benefits
+
+Using Flow Agent Kit as an NPM package offers several advantages:
+
+1. **Easy Installation**
+
+   - Install with a single command: `pnpm add flow-agent-kit`
+   - Automatic dependency management
+   - No manual repository cloning needed
+
+### Main Features
+
+```typescript
+export class FlowAgentKit {
+  public address: string;
+  private genAI: GoogleGenerativeAI;
+  private model: any;
+
+  /**
+   * Creates an instance of FlowAgentKit
+   * @param private_key - Flow account private key
+   * @param network - Flow network to connect to
+   * @param gemini_api_key - Gemini API key for AI features
+   */
+  constructor(private_key: string, network: FlowNetwork = 'mainnet', gemini_api_key: string) {
+    // Configure FCL
+    const accessNode =
+      process.env.FLOW_ACCESS_NODE ||
+      (network === 'testnet'
+        ? 'https://rest-testnet.onflow.org'
+        : network === 'mainnet'
+          ? 'https://rest-mainnet.onflow.org'
+          : 'http://localhost:8888');
+
+    const walletDiscovery =
+      network === 'mainnet'
+        ? 'https://fcl-discovery.onflow.org/authn'
+        : network === 'testnet'
+          ? 'https://fcl-discovery.onflow.org/testnet/authn'
+          : 'http://localhost:8701/fcl/authn';
+
+    fcl.config({
+      'flow.network': network,
+      'app.detail.title': 'Flow Agent Kit',
+      'accessNode.api': accessNode,
+      'discovery.wallet': walletDiscovery,
+    } as any);
+  }
+}
 ```
 
-## Configuração
+### How to Use?
 
-1. Crie um arquivo `.env` na raiz do seu projeto:
+After installation, you can use the kit in two ways:
 
-```env
-# Flow Network (mainnet, testnet, emulator)
-FLOW_NETWORK=testnet
+#### Chat Mode
 
-# Flow Account Private Key
-FLOW_PRIVATE_KEY=sua_chave_privada
+- Interactive command-line interface
+- You can chat with the agent and request blockchain operations
+- Example: "What's my balance?" or "Transfer 10 FLOW to 0x1234..."
 
-# Flow Access Node (opcional)
-FLOW_ACCESS_NODE=https://rest-testnet.onflow.org
+#### Autonomous Mode
 
-# Gemini API Key
-GEMINI_API_KEY=sua_chave_api_gemini
-```
+- The agent operates independently, executing programmed actions
+- Useful for automation and monitoring
 
-2. Importe e inicialize o FlowAgentKit:
+### Basic Usage Example:
 
 ```typescript
 import { FlowAgentKit } from 'flow-agent-kit';
 
-// Inicializar o agente
-const agent = new FlowAgentKit(
-  process.env.FLOW_PRIVATE_KEY || '',
-  'testnet',
-  process.env.GEMINI_API_KEY || ''
-);
+// Initialize the agent
+const agent = new FlowAgentKit('your_private_key', 'mainnet', 'your_gemini_api_key');
 
-// Consultar saldo
-const saldo = await agent.getBalance(agent.address);
-console.log('Saldo:', saldo);
+// Check balance
+const balance = await agent.getBalance();
+console.log('Balance:', balance);
 
-// Gerar conteúdo com IA
-const resposta = await agent.generateContent('O que é Flow blockchain?');
-console.log('Resposta:', resposta);
+// Generate content with AI
+const response = await agent.generateContent('What is Flow blockchain?');
+console.log('Response:', response);
 ```
 
-## Funcionalidades
+## Installation
 
-### Consulta de Saldo
+1. Clone the repository:
 
-```typescript
-const saldo = await agent.getBalance(address);
+```bash
+git clone https://github.com/Flow-Brasil/flow-agent-kit.git
 ```
 
-### Transferência de Tokens
+2. Enter the folder:
 
-```typescript
-const tx = await agent.transfer(destinatario, quantidade);
+```bash
+cd flow-agent-kit
 ```
 
-### Implantação de Tokens
+3. Install dependencies:
 
-```typescript
-const tx = await agent.deployToken(nome, simbolo, suprimentoInicial);
+```bash
+pnpm install
 ```
 
-### Implantação de Coleções NFT
+4. Configure environment variables:
 
-```typescript
-const tx = await agent.deployCollection(nome, descricao, baseURI);
+```bash
+cp .env.example .env
 ```
 
-### Geração de Conteúdo com IA
+5. Configure your `.env` file:
 
-```typescript
-const resposta = await agent.generateContent(prompt);
+```env
+# Flow wallet private key
+FLOW_PRIVATE_KEY=xxx
+
+# Google AI (Gemini) API key
+GEMINI_API_KEY=xxx
+
+# Flow network (mainnet, testnet, or emulator)
+FLOW_NETWORK=testnet
 ```
 
-## Requisitos
+## Development
+
+To test:
+
+```bash
+# Start the project in development mode
+pnpm dev
+
+# OR run tests
+pnpm test
+```
+
+## Contributing
+
+1. Fork the repository
+2. Create a feature branch (`git checkout -b feature/new-feature`)
+3. Commit your changes (`git commit -am 'Add new feature'`)
+4. Push to the branch (`git push origin feature/new-feature`)
+5. Create a Pull Request
+
+## Requirements
 
 - Node.js ≥ 18.18.0
 - pnpm ≥ 8.0.0
 
-## Contribuindo
-
-1. Fork o repositório
-2. Crie uma branch para sua feature (`git checkout -b feature/nova-feature`)
-3. Commit suas mudanças (`git commit -am 'Adiciona nova feature'`)
-4. Push para a branch (`git push origin feature/nova-feature`)
-5. Crie um Pull Request
-
-## Licença
+## License
 
 MIT
