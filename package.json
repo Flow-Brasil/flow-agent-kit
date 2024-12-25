@@ -1,5 +1,5 @@
 {
-  "name": "flow-agent-kit",
+  "name": "@coflow/flow-agent-kit",
   "version": "1.0.0",
   "description": "Kit de desenvolvimento para criar agentes de IA que interagem com a blockchain Flow",
   "private": false,
