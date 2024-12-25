@@ -1,5 +1,13 @@
 # Flow Agent Kit
 
+[![NPM Package](https://img.shields.io/npm/v/@coflow/flow-agent-kit.svg)](https://www.npmjs.com/package/@coflow/flow-agent-kit)
+[![GitHub Repository](https://img.shields.io/badge/github-Flow--Brasil%2Fflow--agent--kit-blue.svg)](https://github.com/Flow-Brasil/flow-agent-kit)
+
+## Project Links
+
+- NPM Package: [https://www.npmjs.com/package/@coflow/flow-agent-kit](https://www.npmjs.com/package/@coflow/flow-agent-kit)
+- GitHub Repository: [https://github.com/Flow-Brasil/flow-agent-kit](https://github.com/Flow-Brasil/flow-agent-kit)
+
 # Grant category
 
 - [x] Developer tools / services
