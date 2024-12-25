@@ -1,3 +1,5 @@
+import { FlowAgentKit } from './agent/index.js';
+
 // Re-export da classe principal
 export { FlowAgentKit } from './agent/index.js';
 
