@@ -21,11 +21,10 @@ export class FlowAgentKit {
     fcl.config({
       'flow.network': network,
       'app.detail.title': 'Flow Agent Kit',
-      'app.detail.icon': 'https://placekitten.com/g/200/200',
     });
 
     // Initialize account
-    this.address = fcl.signer.authorize(private_key);
+    this.address = private_key;
     this.openai_api_key = openai_api_key;
   }
 
@@ -53,10 +52,10 @@ export class FlowAgentKit {
           }
         }
       `,
-      args: (_arg, _t) => [
-        fcl.arg(name, types.String),
-        fcl.arg(symbol, types.String),
-        fcl.arg(initialSupply.toFixed(8), types.UFix64),
+      args: (arg: typeof fcl.arg, t: typeof types) => [
+        arg(name, t.String),
+        arg(symbol, t.String),
+        arg(initialSupply.toFixed(8), t.UFix64),
       ],
       proposer: fcl.authz,
       payer: fcl.authz,
@@ -87,7 +86,7 @@ export class FlowAgentKit {
           return 0.0
         }
       `,
-      args: (_arg, _t) => [fcl.arg(targetAddress, types.Address)],
+      args: (arg: typeof fcl.arg, t: typeof types) => [arg(targetAddress, t.Address)],
     }) as string;
 
     return parseFloat(balance);
@@ -113,7 +112,10 @@ export class FlowAgentKit {
           }
         }
       `,
-      args: (_arg, _t) => [fcl.arg(to, types.Address), fcl.arg(amount.toFixed(8), types.UFix64)],
+      args: (arg: typeof fcl.arg, t: typeof types) => [
+        arg(to, t.Address),
+        arg(amount.toFixed(8), t.UFix64),
+      ],
       proposer: fcl.authz,
       payer: fcl.authz,
       authorizations: [fcl.authz],
@@ -143,10 +145,10 @@ export class FlowAgentKit {
           }
         }
       `,
-      args: (_arg, _t) => [
-        fcl.arg(name, types.String),
-        fcl.arg(description, types.String),
-        fcl.arg(baseURI, types.String),
+      args: (arg: typeof fcl.arg, t: typeof types) => [
+        arg(name, t.String),
+        arg(description, t.String),
+        arg(baseURI, t.String),
       ],
       proposer: fcl.authz,
       payer: fcl.authz,
