@@ -1,6 +1,7 @@
 import * as fcl from '@onflow/fcl';
 import * as types from '@onflow/types';
 import { FlowNetwork } from '../types';
+import { GoogleGenerativeAI } from '@google/generative-ai';
 
 /**
  * Main class for interacting with Flow blockchain
@@ -8,15 +9,16 @@ import { FlowNetwork } from '../types';
  */
 export class FlowAgentKit {
   public address: string;
-  public openai_api_key: string;
+  private genAI: GoogleGenerativeAI;
+  private model: any;
 
   /**
    * Creates an instance of FlowAgentKit
    * @param private_key - Flow account private key
    * @param network - Flow network to connect to
-   * @param openai_api_key - OpenAI API key for AI features
+   * @param gemini_api_key - Gemini API key for AI features
    */
-  constructor(private_key: string, network: FlowNetwork = 'mainnet', openai_api_key: string) {
+  constructor(private_key: string, network: FlowNetwork = 'mainnet', gemini_api_key: string) {
     // Configure FCL
     if (network === 'testnet') {
       fcl.config({
@@ -43,7 +45,26 @@ export class FlowAgentKit {
 
     // Initialize account
     this.address = private_key;
-    this.openai_api_key = openai_api_key;
+
+    // Initialize Gemini
+    this.genAI = new GoogleGenerativeAI(gemini_api_key);
+    this.model = this.genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
+  }
+
+  /**
+   * Generate content using Gemini
+   * @param prompt - The prompt to send to Gemini
+   * @returns Generated content
+   */
+  public async generateContent(prompt: string): Promise<string> {
+    try {
+      const result = await this.model.generateContent(prompt);
+      const response = await result.response;
+      return response.text();
+    } catch (error: unknown) {
+      const errorMessage = error instanceof Error ? error.message : 'Unknown error';
+      throw new Error(`Failed to generate content: ${errorMessage}`);
+    }
   }
 
   /**

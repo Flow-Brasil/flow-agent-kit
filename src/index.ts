@@ -11,11 +11,15 @@ async function main() {
     const agent = new FlowAgentKit(
       process.env.FLOW_PRIVATE_KEY || '',
       'testnet',
-      process.env.OPENAI_API_KEY || ''
+      process.env.GEMINI_API_KEY || ''
     );
 
     console.log('Flow Agent Kit iniciado com sucesso!');
     console.log(`Endereço da conta: ${agent.address}`);
+
+    // Exemplo: Gerar conteúdo com Gemini
+    const response = await agent.generateContent('Explique como funciona a blockchain Flow em uma frase.');
+    console.log('Resposta do Gemini:', response);
 
     // Exemplo: Verificar saldo
     const balance = await agent.getBalance();
