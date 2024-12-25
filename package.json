@@ -18,7 +18,7 @@
     "dev": "ts-node-dev --respawn --transpile-only src/index.ts"
   },
   "engines": {
-    "node": ">=23.1.0",
+    "node": ">=18.18.0",
     "pnpm": ">=8.0.0"
   },
   "keywords": [

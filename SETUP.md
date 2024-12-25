@@ -6,14 +6,14 @@ Este guia fornece instruções detalhadas para configurar e executar o Flow Agen
 
 Antes de começar, certifique-se de ter instalado:
 
-- Node.js (versão >= 23.1.0)
+- Node.js (versão >= 18.18.0)
 - pnpm (versão >= 8.0.0)
 - Git
 
 Para instalar o Node.js no macOS:
 
 ```bash
-brew install node@23
+brew install node
 ```
 
 Para instalar o pnpm:
@@ -113,15 +113,15 @@ flow-agent-kit/
 Se você encontrar erros relacionados à versão do Node.js, certifique-se de estar usando a versão correta:
 
 ```bash
-node --version  # Deve ser >= 23.1.0
+node --version  # Deve ser >= 18.18.0
 ```
 
 Para mudar para a versão correta:
 
 ```bash
-nvm use 23  # Se você usa nvm
+nvm use 18  # Se você usa nvm
 # ou
-brew unlink node && brew link node@23  # Se instalou via Homebrew
+brew unlink node && brew link node@18  # Se instalou via Homebrew
 ```
 
 ### Erro de permissão no macOS
