@@ -4,85 +4,101 @@ Kit de desenvolvimento para criar agentes de IA que interagem com a blockchain F
 
 ## Características
 
-- Integração com Flow Client Library (FCL)
-- Suporte a tokens fungíveis e não fungíveis
-- Integração com LangChain para agentes de IA
-- Tipagem completa em TypeScript
-- Documentação automática com TypeDoc
-
-## Requisitos
-
-- Node.js >= 23.1.0
-- pnpm >= 8.0.0
+- 🤖 Integração com IA (Google Gemini)
+- 🔗 Interação com a blockchain Flow
+- 💰 Gerenciamento de tokens (fungíveis e não fungíveis)
+- 🔑 Suporte a múltiplas redes (mainnet, testnet, emulator)
 
 ## Instalação
 
 ```bash
-pnpm install
+pnpm add flow-agent-kit
 ```
 
 ## Configuração
 
-Crie um arquivo `.env` na raiz do projeto com as seguintes variáveis:
+1. Crie um arquivo `.env` na raiz do seu projeto:
 
 ```env
-FLOW_NETWORK=testnet # ou mainnet
-FLOW_PRIVATE_KEY=your_private_key
-OPENAI_API_KEY=your_openai_api_key
+# Flow Network (mainnet, testnet, emulator)
+FLOW_NETWORK=testnet
+
+# Flow Account Private Key
+FLOW_PRIVATE_KEY=sua_chave_privada
+
+# Flow Access Node (opcional)
+FLOW_ACCESS_NODE=https://rest-testnet.onflow.org
+
+# Gemini API Key
+GEMINI_API_KEY=sua_chave_api_gemini
 ```
 
-## Uso
+2. Importe e inicialize o FlowAgentKit:
 
-### Desenvolvimento
+```typescript
+import { FlowAgentKit } from 'flow-agent-kit';
 
-```bash
-# Iniciar em modo desenvolvimento com hot-reload
-pnpm dev
+// Inicializar o agente
+const agent = new FlowAgentKit(
+  process.env.FLOW_PRIVATE_KEY || '',
+  'testnet',
+  process.env.GEMINI_API_KEY || ''
+);
 
-# Executar testes
-pnpm test
+// Consultar saldo
+const saldo = await agent.getBalance(agent.address);
+console.log('Saldo:', saldo);
 
-# Gerar documentação
-pnpm docs
+// Gerar conteúdo com IA
+const resposta = await agent.generateContent('O que é Flow blockchain?');
+console.log('Resposta:', resposta);
 ```
 
-### Build
+## Funcionalidades
 
-```bash
-# Limpar diretório de build
-pnpm clean
+### Consulta de Saldo
 
-# Compilar TypeScript
-pnpm build
+```typescript
+const saldo = await agent.getBalance(address);
 ```
 
-### Linting e Formatação
+### Transferência de Tokens
 
-```bash
-# Executar linter
-pnpm lint
-
-# Corrigir problemas de linting
-pnpm lint:fix
-
-# Formatar código
-pnpm format
+```typescript
+const tx = await agent.transfer(destinatario, quantidade);
 ```
 
-## Estrutura do Projeto
+### Implantação de Tokens
 
+```typescript
+const tx = await agent.deployToken(nome, simbolo, suprimentoInicial);
 ```
-src/
-├── agent/         # Classe principal do agente
-├── langchain/     # Ferramentas LangChain
-├── tools/         # Ferramentas de interação com Flow
-├── types/         # Definições de tipos
-└── utils/         # Utilitários
 
-test/              # Testes
-docs/              # Documentação gerada
+### Implantação de Coleções NFT
+
+```typescript
+const tx = await agent.deployCollection(nome, descricao, baseURI);
 ```
+
+### Geração de Conteúdo com IA
+
+```typescript
+const resposta = await agent.generateContent(prompt);
+```
+
+## Requisitos
+
+- Node.js ≥ 18.18.0
+- pnpm ≥ 8.0.0
+
+## Contribuindo
+
+1. Fork o repositório
+2. Crie uma branch para sua feature (`git checkout -b feature/nova-feature`)
+3. Commit suas mudanças (`git commit -am 'Adiciona nova feature'`)
+4. Push para a branch (`git push origin feature/nova-feature`)
+5. Crie um Pull Request
 
 ## Licença
 
-ISC
+MIT

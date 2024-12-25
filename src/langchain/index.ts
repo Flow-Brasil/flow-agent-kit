@@ -1,33 +1,23 @@
-import { Tool } from '@langchain/core/base';
-import { FlowAgentKit } from '../agent';
+import { Tool } from '@langchain/core/tools';
+import { FlowAgentKit } from '../agent/index.js';
+import { getBalance } from '../tools/get_balance.js';
 
 export class FlowBalanceTool extends Tool {
   name = 'flow_balance';
-  description = `Get the balance of a Flow account.
-  
-  If you want to get the balance of your wallet, you don't need to provide an address.
-  If no token identifier is provided, the balance will be in FLOW.`;
+  description = 'Obtém o saldo de uma conta Flow';
+  flowKit: FlowAgentKit;
 
-  constructor(private flowKit: FlowAgentKit) {
+  constructor(flowKit: FlowAgentKit) {
     super();
+    this.flowKit = flowKit;
   }
 
   protected async _call(_input: string): Promise<string> {
     try {
-      const balance = await this.flowKit.getBalance();
-
-      return JSON.stringify({
-        status: 'success',
-        balance: balance,
-        token: 'FLOW',
-      });
-    } catch (error: unknown) {
-      const errorMessage = error instanceof Error ? error.message : 'Unknown error';
-      return JSON.stringify({
-        status: 'error',
-        message: errorMessage,
-        code: 'UNKNOWN_ERROR',
-      });
+      const balance = await getBalance(this.flowKit);
+      return `O saldo da conta é ${balance} FLOW`;
+    } catch (error) {
+      return `Erro ao obter saldo: ${error}`;
     }
   }
 }

@@ -5,16 +5,21 @@ Todas as mudanças notáveis neste projeto serão documentadas neste arquivo.
 O formato é baseado em [Keep a Changelog](https://keepachangelog.com/pt-BR/1.0.0/),
 e este projeto adere ao [Versionamento Semântico](https://semver.org/lang/pt-BR/).
 
-## [1.0.0] - 2023-12-25
+## [1.0.0] - 2024-03-07
 
 ### Adicionado
 
-- Integração com Flow Client Library (FCL)
-- Suporte a tokens fungíveis e não fungíveis Flow
-- Ferramentas LangChain para interação com Flow
-- Sistema de tipos TypeScript para Flow
-- Configuração de linting e formatação
-- Documentação em português
+- Integração com Google Gemini para processamento de linguagem natural
+- Suporte a múltiplas redes Flow (mainnet, testnet, emulator)
+- Funcionalidades básicas de interação com a blockchain Flow:
+  - Consulta de saldo
+  - Transferência de tokens
+  - Implantação de tokens fungíveis
+  - Implantação de coleções NFT
+- Documentação completa com exemplos de uso
+- Configuração de testes com Jest
+- Configuração de linting com ESLint
+- Licença MIT
 
 ### Removido
 

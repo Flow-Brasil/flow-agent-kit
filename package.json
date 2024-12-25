@@ -1,57 +1,56 @@
 {
   "name": "flow-agent-kit",
   "version": "1.0.0",
-  "description": "connect any ai agents to flow protocols",
+  "description": "Kit de desenvolvimento para criar agentes de IA que interagem com a blockchain Flow",
+  "private": false,
+  "type": "module",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
-  "type": "module",
+  "publishConfig": {
+    "access": "public"
+  },
   "scripts": {
     "build": "tsc",
-    "docs": "typedoc src --out docs",
-    "test": "node --loader ts-node/esm test/index.ts",
-    "lint": "eslint \"src/**/*.ts\"",
-    "lint:fix": "eslint \"src/**/*.ts\" --fix",
-    "format": "prettier --write \"src/**/*.ts\"",
-    "clean": "rm -rf dist",
+    "dev": "node --loader ts-node/esm src/index.ts",
+    "test": "jest",
     "prepare": "npm run build",
     "prepublishOnly": "npm test && npm run lint",
-    "dev": "node --loader ts-node/esm src/index.ts"
-  },
-  "engines": {
-    "node": ">=18.18.0",
-    "pnpm": ">=8.0.0"
+    "lint": "eslint . --ext .ts"
   },
   "keywords": [
     "flow",
     "blockchain",
     "ai",
-    "agents"
+    "agent",
+    "gemini",
+    "web3"
   ],
-  "author": "",
-  "license": "ISC",
+  "author": "Flow Brasil",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Flow-Brasil/flow-agent-kit.git"
+  },
+  "bugs": {
+    "url": "https://github.com/Flow-Brasil/flow-agent-kit/issues"
+  },
+  "homepage": "https://github.com/Flow-Brasil/flow-agent-kit#readme",
   "dependencies": {
-    "@onflow/fcl": "^1.9.0",
+    "@google/generative-ai": "^0.2.1",
+    "@langchain/core": "^0.1.48",
+    "@onflow/fcl": "^1.10.0",
     "@onflow/types": "^1.2.1",
-    "@langchain/core": "^0.1.0",
-    "@langchain/google-genai": "^0.1.0",
-    "@langchain/groq": "^0.1.2",
-    "@langchain/langgraph": "^0.2.27",
-    "@google/generative-ai": "^0.2.0",
-    "decimal.js": "^10.4.3",
-    "dotenv": "^16.4.5",
-    "form-data": "^4.0.1",
-    "langchain": "^0.3.6",
-    "typedoc": "^0.26.11"
+    "dotenv": "^16.4.5"
   },
   "devDependencies": {
-    "@types/node": "^22.9.0",
-    "@typescript-eslint/eslint-plugin": "^8.18.2",
-    "@typescript-eslint/parser": "^8.18.2",
-    "eslint": "^9.17.0",
-    "eslint-config-prettier": "^9.1.0",
-    "eslint-plugin-prettier": "^5.2.1",
-    "prettier": "^3.4.2",
+    "@types/jest": "^29.5.12",
+    "@types/node": "^20.11.24",
+    "@typescript-eslint/eslint-plugin": "^7.1.0",
+    "@typescript-eslint/parser": "^7.1.0",
+    "eslint": "^8.57.0",
+    "jest": "^29.7.0",
+    "ts-jest": "^29.1.2",
     "ts-node": "^10.9.2",
-    "typescript": "^5.7.2"
+    "typescript": "^5.3.3"
   }
 }

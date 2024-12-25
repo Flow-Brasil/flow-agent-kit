@@ -1,29 +1,33 @@
 import { FlowAgentKit } from './agent/index.js';
 import dotenv from 'dotenv';
 
-export { FlowAgentKit };
-
-// Carregar variáveis de ambiente
 dotenv.config();
+
+const privateKey = process.env.FLOW_PRIVATE_KEY || '';
+const geminiApiKey = process.env.GEMINI_API_KEY || '';
+
+if (!privateKey) {
+  throw new Error('FLOW_PRIVATE_KEY não encontrada no arquivo .env');
+}
+
+if (!geminiApiKey) {
+  throw new Error('GEMINI_API_KEY não encontrada no arquivo .env');
+}
 
 async function main() {
   try {
-    const agent = new FlowAgentKit(
-      process.env.FLOW_PRIVATE_KEY || '',
-      'testnet',
-      process.env.GEMINI_API_KEY || ''
-    );
-
+    const agent = new FlowAgentKit(privateKey, 'testnet', geminiApiKey);
     console.log('Flow Agent Kit iniciado com sucesso!');
-    console.log(`Endereço da conta: ${agent.address}`);
+    console.log('Endereço da conta:', agent.address);
 
-    // Exemplo: Gerar conteúdo com Gemini
-    const response = await agent.generateContent('Explique como funciona a blockchain Flow em uma frase.');
-    console.log('Resposta do Gemini:', response);
+    // Teste do Gemini
+    const resposta = await agent.generateContent('O que é Flow blockchain?');
+    console.log('Resposta do Gemini:', resposta);
 
-    // Exemplo: Verificar saldo
-    const balance = await agent.getBalance();
-    console.log(`Saldo: ${balance} FLOW`);
+    // Teste do saldo
+    const saldo = await agent.getBalance(agent.address);
+    console.log('Saldo da conta:', saldo);
+
   } catch (error) {
     console.error('Erro ao iniciar o Flow Agent Kit:', error);
   }

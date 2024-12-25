@@ -111,22 +111,36 @@ export class FlowAgentKit {
    * @param tokenIdentifier - Optional token identifier
    * @returns Token balance
    */
-  public async getBalance(address?: string, tokenIdentifier?: string): Promise<number> {
+  public async getBalance(address: string): Promise<number> {
     const targetAddress = address || this.address;
 
-    const balance = await fcl.query({
-      cadence: `
-        import FungibleToken from 0xFungibleToken
+    const script = `
+      import FlowToken from 0x7e60df042a9c0868
+      import FungibleToken from 0x9a0766d93b6608b7
+      
+      access(all) fun main(address: Address): UFix64 {
+        let account = getAccount(address)
         
-        pub fun main(address: Address): UFix64 {
-          // Balance query logic here
-          return 0.0
-        }
-      `,
-      args: (arg: typeof fcl.arg, t: typeof types) => [arg(targetAddress, t.Address)],
-    }) as string;
+        let vaultRef = account
+          .getCapability<&FlowToken.Vault{FungibleToken.Balance}>(/public/flowTokenReceiver)
+          .borrow()
+          ?? panic("Could not borrow Balance reference to the Vault")
+        
+        return vaultRef.balance
+      }
+    `
 
-    return parseFloat(balance);
+    try {
+      const result = await fcl.query({
+        cadence: script,
+        args: (arg: any, t: any) => [arg(targetAddress, t.Address)]
+      })
+
+      return Number(result)
+    } catch (error) {
+      console.error('Erro ao obter saldo:', error)
+      return 0
+    }
   }
 
   /**

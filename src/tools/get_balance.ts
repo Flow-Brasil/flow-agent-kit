@@ -6,9 +6,14 @@ import { FlowAgentKit } from '../agent/index.js';
  * @param token_identifier Optional token identifier. If not provided, returns FLOW balance
  * @returns Balance as a number
  */
-export async function get_balance(
+export async function getBalance(
   agent: FlowAgentKit,
+  address?: string,
   token_identifier?: string
 ): Promise<number> {
-  return agent.getBalance(undefined, token_identifier);
+  if (!address) {
+    address = agent.address;
+  }
+
+  return agent.getBalance(address);
 }
